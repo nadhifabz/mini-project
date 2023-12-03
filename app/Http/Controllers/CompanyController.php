@@ -110,7 +110,7 @@ class CompanyController extends Controller
         // dd($getEmail);
         if ($request->email != $company->email) {
             if (!isEmpty($getEmail)) {
-                return redirect('/companies/' . $company->id . '/edit')->with('error', 'Email is already taken!');
+                return redirect('/companies/' . $company->id . '/edit')->with('error', 'Email is already in use!');
             }
         }
         // dd($isExistEmail);

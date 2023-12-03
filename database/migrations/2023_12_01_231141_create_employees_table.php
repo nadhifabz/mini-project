@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_nm');
             $table->string('last_nm');
-            $table->foreignId('company_id')->constrained(table: 'companies', indexName: 'id');
+            $table->foreignId('company_id')->constrained(table: 'companies', indexName: 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->string('email')->unique();
             $table->string('phone');
             $table->timestamps();

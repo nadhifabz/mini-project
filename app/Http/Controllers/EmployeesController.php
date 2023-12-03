@@ -91,12 +91,12 @@ class EmployeesController extends Controller
         $getEmail = Employees::where('email', $request->email)->first();
         if ($request->email != $employee->email) {
             if (!isEmpty($getEmail)) {
-                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already taken!');
+                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already in use!');
             }
         }
         if ($request->phone != $employee->phone) {
             if (!isEmpty($getEmail)) {
-                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Phone number is already taken!');
+                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Phone number is already in use!');
             }
         }
         Employees::where('id', $employee->id)->update($validatedData);
