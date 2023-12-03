@@ -25,7 +25,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            // $request->session()->regenerate();
             // return response()->json([
             //     'message' => 'Login success',
             //     'api_token' => $user->createToken($request->device_name)->plainTextToken
