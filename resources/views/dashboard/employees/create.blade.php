@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('content-header')
+    <h1>Create New Employee</h1>
+@endsection
 @section('content-body')
     <form action="/employees" method="POST">
         @csrf

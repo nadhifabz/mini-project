@@ -32,4 +32,5 @@ Route::get('/employees/list', [EmployeesController::class, 'list'])->middleware(
 Route::resource('/companies', CompanyController::class)->middleware('auth.basic');
 Route::resource('/employees', EmployeesController::class)->middleware('auth.basic');
 
-Route::post('/login', [LoginController::class, 'authenticate']);
+// Route::post('/login', [LoginController::class, 'authenticate']);
+// Route::post('/logout', []);

@@ -47,15 +47,15 @@
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li> --}}
+                <li class="nav-item">
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link text-start">
+                            <i class="nav-icon fas fa-door-open"></i>
+                                Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

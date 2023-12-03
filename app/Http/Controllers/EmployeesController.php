@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Blade;
 use App\Http\Requests\StoreEmployeesRequest;
 use App\Http\Requests\UpdateEmployeesRequest;
 
-use function PHPUnit\Framework\isEmpty;
-
 class EmployeesController extends Controller
 {
     /**
@@ -30,6 +28,7 @@ class EmployeesController extends Controller
         for ($i = 0; $i < $response->count(); $i++) {
             $response[$i]['action'] = Blade::render(
                 '<a href="/employees/' . $response[$i]["id"] . '/edit" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/employees/' . $response[$i]["id"] . '" class="btn btn-success btn-sm">Detail</a>
                 <form action="/employees/'. $response[$i]["id"] .'" method="POST" class="d-inline">
                 @method("delete")
                 @csrf
@@ -66,7 +65,11 @@ class EmployeesController extends Controller
      */
     public function show(Employees $employee)
     {
-        //
+        return view('dashboard.employees.show',[
+            'active' => 'employee',
+            'employee' => $employee,
+            'company' => Company::where('id','=',$employee->id)->get()
+        ]);
     }
 
     /**
@@ -88,16 +91,15 @@ class EmployeesController extends Controller
     public function update(UpdateEmployeesRequest $request, Employees $employee)
     {
         $validatedData = $request->validated();
-        $getEmail = Employees::where('email', $request->email)->first();
-        if ($request->email != $employee->email) {
-            if (!isEmpty($getEmail)) {
-                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already in use!');
-            }
-        }
-        if ($request->phone != $employee->phone) {
-            if (!isEmpty($getEmail)) {
-                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Phone number is already in use!');
-            }
+        // $getEmail = Employees::where('email', $request->email)->first();
+        if ($request->email != $employee->email || $request->phone != $employee->phone) {
+            // if (isset($getEmail)) {
+            //     return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already in use!');
+            // }
+            $request->validate([
+                'email' => 'required|unique:employees|email:dns',
+                'phone' => 'required|unique:employees|numeric'
+            ]);
         }
         Employees::where('id', $employee->id)->update($validatedData);
         return redirect('/employees')->with('success', 'Employee has been updated!');

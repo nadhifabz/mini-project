@@ -9,8 +9,6 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use Illuminate\Support\Facades\Blade;
 
-use function PHPUnit\Framework\isEmpty;
-
 class CompanyController extends Controller
 {
     /**
@@ -40,6 +38,7 @@ class CompanyController extends Controller
         for ($i = 0; $i < $response->count(); $i++) {
             $response[$i]['action'] = Blade::render(
                 '<a href="/companies/' . $response[$i]["id"] . '/edit" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/companies/' . $response[$i]["id"] . '" class="btn btn-success btn-sm">Detail</a>
                 <form action="/companies/'. $response[$i]["id"] .'" method="POST" class="d-inline">
                 @method("delete")
                 @csrf
@@ -82,7 +81,10 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return view('dashboard.companies.show', [
+            'active' => 'company',
+            'company' => $company
+        ]);
     }
 
     /**
@@ -107,15 +109,14 @@ class CompanyController extends Controller
 
 
         $getEmail = Company::where('email', $request->email)->first();
-        // dd($getEmail);
+        // dd(isset($getEmail));
         if ($request->email != $company->email) {
-            if (!isEmpty($getEmail)) {
+            if (isset($getEmail)) {
                 return redirect('/companies/' . $company->id . '/edit')->with('error', 'Email is already in use!');
             }
         }
-        // dd($isExistEmail);
         Company::where('id', $company->id)->update($validatedData);
-        return redirect('/companies')->with('success', 'Company has been updated!');
+        return redirect('/companies')->with('success', $company->name.' has been updated!');
     }
 
     /**

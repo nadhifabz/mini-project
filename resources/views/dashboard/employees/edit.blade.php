@@ -60,7 +60,7 @@
                 <label for="email" class="col-form-label">Email</label>
             </div>
             <div class="col">
-                <input type="email" id="email" name="email" class="form-control" value="{{ $employee->email }}">
+                <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ $employee->email }}">
                 @error('email')
                     <div class="invalid-feedback d-block">
                         {{ $message }}

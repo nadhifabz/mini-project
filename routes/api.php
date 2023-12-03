@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyApiController;
 use App\Http\Controllers\EmployeeApiController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('companies',CompanyApiController::class);
-Route::apiResource('employees', EmployeeApiController::class);
+Route::apiResource('companies',CompanyApiController::class)->middleware(['auth:sanctum']);
+Route::apiResource('employees', EmployeeApiController::class)->middleware(['auth:sanctum']);
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware(['auth:sanctum']);
