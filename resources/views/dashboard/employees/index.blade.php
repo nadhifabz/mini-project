@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content-header')
-    {{ url('/') }}
+    <h1>Welcome to Employee Menu!</h1>
 @endsection
 @section('content-body')
     <div class="card">
@@ -90,10 +90,10 @@
                         data: 'last_nm'
                     },
                     {
-                        data: 'email'
+                        data: 'name'
                     },
                     {
-                        data: 'company_id'
+                        data: 'email'
                     },
                     {
                         data: 'phone'

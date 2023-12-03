@@ -35,7 +35,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/companies" class="nav-link {{ $active === 'company' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                            <i class="far fa-circle nav-icon"></i>
                                 <p>Company</p>
                             </a>
                         </li>

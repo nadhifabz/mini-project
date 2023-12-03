@@ -21,7 +21,9 @@ use App\Http\Controllers\EmployeesController;
 // })->name('login');
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('dashboard.index',[
+        "active" => ""
+    ]);
 })->middleware('auth.basic');
 
 Route::get('/companies/list', [CompanyController::class, 'list'])->middleware('auth.basic');

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Blade;
 use App\Http\Requests\StoreEmployeesRequest;
 use App\Http\Requests\UpdateEmployeesRequest;
 
+use function PHPUnit\Framework\isEmpty;
+
 class EmployeesController extends Controller
 {
     /**
@@ -15,22 +17,23 @@ class EmployeesController extends Controller
      */
     public function index()
     {
+        // Employees::select('*')->join('companies','company_id','=','companies.id')->get()->dump();
         return view('dashboard.employees.index',[
-            "employees" => Employees::all(),
+            // "employees" => Employees::select('companies.name as company_name')->join('companies','employees.company_id','=','companies.id')->first(),
             "active" => "employee"
         ]);
     }
 
     public function list()
     {
-        $response = Employees::all();
+        $response = Employees::select('employees.*','companies.name')->join('companies','employees.company_id','=','companies.id')->get();
         for ($i = 0; $i < $response->count(); $i++) {
             $response[$i]['action'] = Blade::render(
                 '<a href="/employees/' . $response[$i]["id"] . '/edit" class="btn btn-warning btn-sm">Edit</a>
                 <form action="/employees/'. $response[$i]["id"] .'" method="POST" class="d-inline">
                 @method("delete")
                 @csrf
-                <button class="btn btn-sm btn-danger" onclick="return confirm("Are you sure?")">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
                 </form>'
             );
         }
@@ -84,7 +87,20 @@ class EmployeesController extends Controller
      */
     public function update(UpdateEmployeesRequest $request, Employees $employee)
     {
-        //
+        $validatedData = $request->validated();
+        $getEmail = Employees::where('email', $request->email)->first();
+        if ($request->email != $employee->email) {
+            if (!isEmpty($getEmail)) {
+                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already taken!');
+            }
+        }
+        if ($request->phone != $employee->phone) {
+            if (!isEmpty($getEmail)) {
+                return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Phone number is already taken!');
+            }
+        }
+        Employees::where('id', $employee->id)->update($validatedData);
+        return redirect('/employees')->with('success', 'Employee has been updated!');
     }
 
     /**
@@ -93,6 +109,6 @@ class EmployeesController extends Controller
     public function destroy(Employees $employee)
     {
         Employees::where('id', $employee->id)->delete();
-        return redirect('/employee')->with('success', $employee->first_nm . " " . $employee->last_nm . "has been deleted!");
+        return redirect('/employees')->with('success', $employee->first_nm . " " . $employee->last_nm . " has been deleted!");
     }
 }

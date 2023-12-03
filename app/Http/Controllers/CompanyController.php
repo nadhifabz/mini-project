@@ -16,7 +16,7 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         // if ($request->ajax()) {
         //     $data = Company::select('*');
@@ -43,7 +43,7 @@ class CompanyController extends Controller
                 <form action="/companies/'. $response[$i]["id"] .'" method="POST" class="d-inline">
                 @method("delete")
                 @csrf
-                <button class="btn btn-sm btn-danger" onclick="return confirm("Are you sure?")">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
                 </form>'
             );
         //         '<a href="/companies/' . $response[$i]["id"] . '/edit" class="btn btn-warning btn-sm">Edit</a>
@@ -90,7 +90,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        dd($company);
+        // dd($company);
         return view('dashboard.companies.edit', [
             'company' => $company,
             'active' => 'company'

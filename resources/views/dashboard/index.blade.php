@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-body">
                 <h6>Menu CRUD Employee</h6>
-                <a href="/employee" class="btn btn-primary">Click here</a>
+                <a href="/employees" class="btn btn-primary">Click here</a>
             </div>
         </div>
 @endsection
