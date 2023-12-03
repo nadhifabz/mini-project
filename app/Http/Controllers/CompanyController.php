@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use Illuminate\Support\Facades\Blade;
@@ -28,7 +26,7 @@ class CompanyController extends Controller
         //     ->make(true);
         // }
         return view('dashboard.companies.index', [
-            "active" => "company"
+            "active" => "company",
         ]);
     }
 
@@ -45,12 +43,6 @@ class CompanyController extends Controller
                 <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
                 </form>'
             );
-        //         '<a href="/companies/' . $response[$i]["id"] . '/edit" class="btn btn-warning btn-sm">Edit</a>
-        // <form action="/companies/' . $response[$i]["id"] . '" method="POST" class="d-inline">
-        // &#x40;method("delete")
-        // &#x40;csrf
-        // <button class="btn btn-sm btn-danger" onclick="return confirm("Are you sure?")">Delete</button>
-        // </form>';
         }
         return json_encode($response);
     }

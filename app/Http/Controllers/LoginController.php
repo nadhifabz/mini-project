@@ -12,10 +12,31 @@ class LoginController extends Controller
         return view('login.index');
     }
 
-    public function toLogin() {
-        
-    }
+    public function apiLogin(Request $request) {
+        $credentials = $request->validate([
+            'email' => 'required|email:dns',
+            'password' => 'required'
+        ]);
 
+        $user = User::where('email', $request->email)->first();
+        $response['token'] = $user->createToken('auth_token')->plainTextToken;
+        $response['name'] = $user->name;
+        $response['email'] = $user->email;
+
+        if (Auth::attempt($credentials)) {
+            // return $user->createToken($request->email)->plainTextToken;
+            return response()->json([
+                'success' => true,
+                'message' => 'Login success',
+                'data' => $response
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Login failed'
+        ]);
+    }
+    
     public function login(Request $request) {
         $credentials = $request->validate([
             'email' => 'required|email:dns',
@@ -25,32 +46,25 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (Auth::attempt($credentials)) {
-            // $request->session()->regenerate();
-            // return response()->json([
-            //     'message' => 'Login success',
-            //     'api_token' => $user->createToken($request->device_name)->plainTextToken
-            // ]);
-            return $user->createToken($request->email)->plainTextToken;
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
         }
-
-        return response()->json([
-            'message' => 'Login failed'
-        ]);
         
-        // return back()->with('loginError','Login failed!');
+        return back()->with('loginError','Login failed!');
     }
 
-    public function logout(Request $request) {
+    public function apiLogout(Request $request) {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Logout success'
         ]);
     }
 
-    // public function login(Request $request) {
-    //     $request->validate([
-    //         'email' => 'required|email:dns',
-    //         'password' => 'required'
-    //     ]);
-    // }
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
 }

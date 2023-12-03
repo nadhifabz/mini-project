@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('content-header')
-    {{ url('/') }}
+    <h1>Welcome!</h1>
+    {{-- {{ $current_token }} --}}
 @endsection
 @section('content-body')
     <div class="card">

@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('companies',CompanyApiController::class)->middleware(['auth:sanctum']);
 Route::apiResource('employees', EmployeeApiController::class)->middleware(['auth:sanctum']);
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->middleware(['auth:sanctum']);
+Route::post('/login', [LoginController::class, 'apiLogin']);
+Route::post('/logout', [LoginController::class, 'apiLogout'])->middleware(['auth:sanctum']);
