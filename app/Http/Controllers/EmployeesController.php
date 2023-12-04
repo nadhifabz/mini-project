@@ -68,7 +68,7 @@ class EmployeesController extends Controller
         return view('dashboard.employees.show',[
             'active' => 'employee',
             'employee' => $employee,
-            'company' => Company::where('id','=',$employee->id)->get()
+            'company' => Company::where('id','=',$employee->company_id)->first()
         ]);
     }
 

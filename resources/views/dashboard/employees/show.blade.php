@@ -4,7 +4,7 @@
 @endsection
 @section('content-body')
     <div class="card pt-1 ps-2 pb-2">
-        <h5>Work at : {{ $employee->name }}</h5>
+        <h5>Work at : {{ $company->name }}</h5>
         <h5>Email : {{ $employee->email }}</h5>
         <h5>Phone : {{ $employee->phone }}</h5>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime placeat, excepturi, ipsa voluptatum id delectus veritatis natus fuga eligendi velit unde minus! Veritatis voluptate cum, nemo voluptatum laborum ipsam earum. Doloremque vero deleniti ducimus, enim harum aliquam hic sint quidem, a, fugit ut. Nam culpa illo non itaque ducimus omnis unde officia ratione, saepe, fuga ab nulla. Atque reiciendis fuga saepe veritatis repellendus, totam et optio aperiam. Voluptatem pariatur excepturi expedita nemo totam facere. Suscipit error aliquid perferendis amet maxime nemo cum voluptas est, possimus ex natus voluptate reiciendis quia iusto repellat explicabo enim ratione provident, ut distinctio non!</p>
