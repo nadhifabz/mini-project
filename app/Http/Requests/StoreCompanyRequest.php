@@ -24,7 +24,7 @@ class StoreCompanyRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|unique:companies|email:dns',
-            'address' => 'required'
+            'address' => 'required',
         ];
     }
 }

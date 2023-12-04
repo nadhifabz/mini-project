@@ -13,7 +13,10 @@ class CompanyApiController extends Controller
      */
     public function index()
     {
-        return Company::all();
+        return response()->json([
+            'success' => true,
+            'data' => Company::all()
+        ]);
     }
 
     /**
@@ -46,7 +49,10 @@ class CompanyApiController extends Controller
      */
     public function show(Company $company)
     {
-        return $company;
+        return response()->json([
+            'success' => true,
+            'data' => $company
+        ]);
     }
 
     /**

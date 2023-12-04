@@ -103,9 +103,12 @@ class CompanyController extends Controller
         $getEmail = Company::where('email', $request->email)->first();
         // dd(isset($getEmail));
         if ($request->email != $company->email) {
-            if (isset($getEmail)) {
-                return redirect('/companies/' . $company->id . '/edit')->with('error', 'Email is already in use!');
-            }
+            // if (isset($getEmail)) {
+            //     return redirect('/companies/' . $company->id . '/edit')->with('error', 'Email is already in use!');
+            // }
+            $request->validate([
+                'email' => 'required|unique:employees|email:dns'
+            ]);
         }
         Company::where('id', $company->id)->update($validatedData);
         return redirect('/companies')->with('success', $company->name.' has been updated!');

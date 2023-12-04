@@ -14,7 +14,10 @@ class EmployeeApiController extends Controller
      */
     public function index()
     {
-        return Employees::all();
+        return response()->json([
+            'success' => true,
+            'data' => Employees::all()
+        ]);
     }
     
     /**
@@ -49,7 +52,10 @@ class EmployeeApiController extends Controller
      */
     public function show(Employees $employee)
     {
-        return $employee;
+        return response()->json([
+            'success' => true,
+            'data' => $employee
+        ]);
     }
 
     /**

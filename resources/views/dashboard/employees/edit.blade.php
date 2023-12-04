@@ -29,9 +29,9 @@
                 <label for="last_nm" class="col-form-label">Last Name</label>
             </div>
             <div class="col-4">
-                <input type="text" id="last_nm" name="last_nm" class="form-control" value="{{ $employee->last_nm }}">
+                <input type="text" id="last_nm" name="last_nm" class="form-control @error('last_nm') is-invalid @enderror" value="{{ $employee->last_nm }}">
                 @error('last_nm')
-                    <div class="invalid-feedback d-block">
+                    <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror

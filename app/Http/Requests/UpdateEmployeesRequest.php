@@ -24,8 +24,8 @@ class UpdateEmployeesRequest extends FormRequest
         return [
             'first_nm' => 'required',
             'last_nm' => 'required',
-            'email' => 'required|email:dns',
-            'phone' => 'required|numeric',
+            // 'email' => 'required|email:dns',
+            // 'phone' => 'required|numeric',
             'company_id' => 'required'
         ];
     }

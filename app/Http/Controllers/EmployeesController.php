@@ -90,17 +90,21 @@ class EmployeesController extends Controller
      */
     public function update(UpdateEmployeesRequest $request, Employees $employee)
     {
-        $validatedData = $request->validated();
+        // $validatedData = $request->validated();
         // $getEmail = Employees::where('email', $request->email)->first();
-        if ($request->email != $employee->email || $request->phone != $employee->phone) {
+        $rules = array();
+        if ($request->email != $employee->email) {
             // if (isset($getEmail)) {
             //     return redirect('/employees/' . $employee->id . '/edit')->with('error', 'Email is already in use!');
             // }
-            $request->validate([
-                'email' => 'required|unique:employees|email:dns',
-                'phone' => 'required|unique:employees|numeric'
-            ]);
+            $rules['email'] = 'required|unique:employees|email:dns';
         }
+
+        if ( $request->phone != $employee->phone) {
+            $rules['phone'] = 'required|unique:employees|numeric';
+        }
+
+        $validatedData = $request->validate($rules);
         Employees::where('id', $employee->id)->update($validatedData);
         return redirect('/employees')->with('success', 'Employee has been updated!');
     }
